@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 typedef struct {
-  uint8_t reg[6];
+  uint8_t reg[4];
   uint8_t pc;
   uint8_t mem[256];
   bool flag_carry;
