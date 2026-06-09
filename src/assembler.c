@@ -9,9 +9,9 @@ Label labels[64];
 int label_count = 0;
 
 void trim(char *line) {
-  char *return_carriage = strchr(line, '\r');
-  if (return_carriage != NULL) {
-    *return_carriage = '\0';
+  char *carriage_return = strchr(line, '\r');
+  if (carriage_return != NULL) {
+    *carriage_return = '\0';
   }
 
   char *newline = strchr(line, '\n');
