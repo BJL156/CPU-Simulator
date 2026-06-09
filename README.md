@@ -12,16 +12,39 @@ Then run the `makefile` which will generate an `app` executable:
 make
 ```
 
+# Example Output
+```
+0x00    MOV R0, 5
+0x03    MOV R1, 1
+0x06    SUB R0, R1
+0x09    JNZ 0x06
+0x06    SUB R0, R1
+0x09    JNZ 0x06
+0x06    SUB R0, R1
+0x09    JNZ 0x06
+0x06    SUB R0, R1
+0x09    JNZ 0x06
+0x06    SUB R0, R1
+0x09    JNZ 0x06
+0x0B    HLT
+PC=0x0C  CARRY=0  ZERO=1
+R0=0x00  R1=0x01  R2=0x00  R3=0x00
+```
+
 # Features
 - 256 bytes of memory.
 - 4 registers (R0 - R3).
 - Small byte-code instruction set:
   - [x] MOV (0x01)
-  - [x] ADD (0x03)
-  - [x] SUB (0x05)
-  - [x] JMP (0x07)
-  - [x] JZ  (0x09)
-  - [x] JNZ (0x0B)
+  - [x] ADD (0x02)
+  - [x] SUB (0x03)
+  - [x] JMP (0x04)
+  - [x] JZ  (0x05)
+  - [x] JNZ (0x06)
+  - [x] ADD (0x07)
+  - [x] OR  (0x08)
+  - [x] XOR (0x09)
+  - [x] NOT (0x0A)
   - [x] HLT (0xFF)
 - Flags
   - [x] CARRY
