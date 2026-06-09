@@ -5,23 +5,28 @@
 #include <stdint.h>
 
 typedef enum {
-  OP_MOV = 0x01,
-  OP_ADD = 0x02,
-  OP_SUB = 0x03,
-  OP_JMP = 0x04,
-  OP_JZ  = 0x05,
-  OP_JNZ = 0x06,
-  OP_AND = 0x07,
-  OP_OR  = 0x08,
-  OP_XOR = 0x09,
-  OP_NOT = 0x0A,
-  OP_HLT = 0xFF
+  OP_MOV  = 0x01,
+  OP_ADD  = 0x02,
+  OP_SUB  = 0x03,
+  OP_JMP  = 0x04,
+  OP_JZ   = 0x05,
+  OP_JNZ  = 0x06,
+  OP_AND  = 0x07,
+  OP_OR   = 0x08,
+  OP_XOR  = 0x09,
+  OP_NOT  = 0x0A,
+  OP_PUSH = 0x0B,
+  OP_POP  = 0x0C,
+  OP_CALL = 0x0D,
+  OP_RET  = 0x0E,
+  OP_HLT  = 0xFF
 } Opcode;
 
 typedef struct {
   uint8_t reg[4];
   uint8_t pc;
   uint8_t mem[256];
+  uint8_t sp;
   bool flag_carry;
   bool flag_zero;
   bool halted;

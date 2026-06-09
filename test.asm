@@ -1,8 +1,14 @@
-; Loop test
+JMP main
 
-MOV R0, 5
-MOV R1, 1
-loop:
-  SUB R0, R1  ; R0 = R0 - R1
-  JNZ loop    ; Jump to loop if the SUB operation is NOT 0.
-HLT           ; Halt CPU.
+test:
+  MOV R2, 4
+  MOV R3, 5
+  ADD R2, R3
+  RET
+main:
+  MOV R0, 3
+  MOV R1, 1
+
+  CALL test
+
+HLT

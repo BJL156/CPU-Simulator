@@ -73,17 +73,21 @@ int assemble(const char *filename, uint8_t *out, int *out_len) {
     }
 
     char *mnem = strtok(buffer, " ,\t");
-    if (!strcmp(mnem, "MOV"))       current_byte += 3;
-    else if (!strcmp(mnem, "ADD"))  current_byte += 3;
-    else if (!strcmp(mnem, "SUB"))  current_byte += 3;
-    else if (!strcmp(mnem, "JMP"))  current_byte += 2;
-    else if (!strcmp(mnem, "JZ"))   current_byte += 2;
-    else if (!strcmp(mnem, "JNZ"))  current_byte += 2;
-    else if (!strcmp(mnem, "AND"))  current_byte += 3;
-    else if (!strcmp(mnem, "OR"))   current_byte += 3;
-    else if (!strcmp(mnem, "XOR"))  current_byte += 3;
-    else if (!strcmp(mnem, "NOT"))  current_byte += 2;
-    else if (!strcmp(mnem, "HLT"))  current_byte += 1;
+    if (!strcmp(mnem, "MOV"))        current_byte += 3;
+    else if (!strcmp(mnem, "ADD"))   current_byte += 3;
+    else if (!strcmp(mnem, "SUB"))   current_byte += 3;
+    else if (!strcmp(mnem, "JMP"))   current_byte += 2;
+    else if (!strcmp(mnem, "JZ"))    current_byte += 2;
+    else if (!strcmp(mnem, "JNZ"))   current_byte += 2;
+    else if (!strcmp(mnem, "AND"))   current_byte += 3;
+    else if (!strcmp(mnem, "OR"))    current_byte += 3;
+    else if (!strcmp(mnem, "XOR"))   current_byte += 3;
+    else if (!strcmp(mnem, "NOT"))   current_byte += 2;
+    else if (!strcmp(mnem, "PUSH"))  current_byte += 2;
+    else if (!strcmp(mnem, "POP"))   current_byte += 2;
+    else if (!strcmp(mnem, "CALL"))  current_byte += 2;
+    else if (!strcmp(mnem, "RET"))   current_byte += 1;
+    else if (!strcmp(mnem, "HLT"))   current_byte += 1;
   }
 
   rewind(file);
@@ -134,6 +138,17 @@ int assemble(const char *filename, uint8_t *out, int *out_len) {
     } else if (!strcmp(mnem, "NOT")) {
       out[(*out_len)++] = OP_NOT;
       out[(*out_len)++] = op1[1] - '0';
+    } else if (!strcmp(mnem, "PUSH")) {
+      out[(*out_len)++] = OP_PUSH;
+      out[(*out_len)++] = op1[1] - '0';
+    } else if (!strcmp(mnem, "POP")) {
+      out[(*out_len)++] = OP_POP;
+      out[(*out_len)++] = op1[1] - '0';
+    } else if (!strcmp(mnem, "CALL")) {
+      out[(*out_len)++] = OP_CALL;
+      out[(*out_len)++] = get_label_address(op1);
+    } else if (!strcmp(mnem, "RET")) {
+      out[(*out_len)++] = OP_RET;
     } else if (!strcmp(mnem, "HLT")) {
       out[(*out_len)++] = OP_HLT;
     }

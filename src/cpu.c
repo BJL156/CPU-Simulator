@@ -47,6 +47,22 @@ void cpu_disasm(const CPU *cpu) {
       printf("NOT R%d\n", cpu->mem[cpu->pc + 1]);
       break;
     }
+    case OP_PUSH: {
+      printf("PUSH R%d\n", cpu->mem[cpu->pc + 1]);
+      break;
+    }
+    case OP_POP: {
+      printf("POP R%d\n", cpu->mem[cpu->pc + 1]);
+      break;
+    }
+    case OP_CALL: {
+      printf("CALL 0x%02X\n", cpu->mem[cpu->pc + 1]);
+      break;
+    }
+    case OP_RET: {
+      printf("RET\n");
+      break;
+    }
     case OP_HLT: {
       printf("HLT\n");
       break;
@@ -59,7 +75,7 @@ void cpu_disasm(const CPU *cpu) {
 }
 
 void cpu_dump(const CPU *cpu) {
-  printf("PC=0x%02X  CARRY=%d  ZERO=%d\n", cpu->pc, cpu->flag_carry, cpu->flag_zero);
+  printf("PC=0x%02X  SP=0x%02X  CARRY=%d  ZERO=%d\n", cpu->pc, cpu->sp, cpu->flag_carry, cpu->flag_zero);
 
   int size = sizeof(cpu->reg) / sizeof(cpu->reg[0]);
   for (int i = 0; i < size; i++) {
@@ -71,6 +87,7 @@ void cpu_dump(const CPU *cpu) {
 
 void cpu_reset(CPU *cpu) {
   memset(cpu, 0, sizeof(CPU));
+  cpu->sp = 0xFF;
 }
 
 void cpu_step(CPU *cpu) {
@@ -88,7 +105,6 @@ void cpu_step(CPU *cpu) {
       uint16_t result = cpu->reg[rd] + cpu->reg[rs];
       cpu->flag_carry = (result > 0xFF);
       cpu->flag_zero = ((result & 0xFF) == 0);
-
       cpu->reg[rd] = result;
       break;
     }
@@ -98,7 +114,6 @@ void cpu_step(CPU *cpu) {
       cpu->flag_carry = (cpu->reg[rd] < cpu->reg[rs]);
       uint16_t result = cpu->reg[rd] - cpu->reg[rs];
       cpu->flag_zero = ((result & 0xFF) == 0);
-
       cpu->reg[rd] = result;
       break;
     }
@@ -150,6 +165,27 @@ void cpu_step(CPU *cpu) {
       uint8_t result = ~cpu->reg[rd];
       cpu->flag_zero = (result == 0);
       cpu->reg[rd] = result;
+      break;
+    }
+    case OP_PUSH: {
+      uint8_t rs = cpu->mem[cpu->pc++];
+      cpu->mem[--cpu->sp] = cpu->reg[rs];
+      break;
+    }
+    case OP_POP: {
+      uint8_t rd = cpu->mem[cpu->pc++];
+      cpu->reg[rd] = cpu->mem[cpu->sp++];
+      break;
+    }
+    case OP_CALL: {
+      uint8_t addr = cpu->mem[cpu->pc++];
+      cpu->mem[--cpu->sp] = cpu->pc;
+      cpu->pc = addr;
+      break;
+    }
+    case OP_RET: {
+      uint8_t return_addr = cpu->mem[cpu->sp++];
+      cpu->pc = return_addr;
       break;
     }
     case OP_HLT: {
