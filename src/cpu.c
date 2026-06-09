@@ -3,6 +3,61 @@
 #include <memory.h>
 #include <stdio.h>
 
+void cpu_disasm(const CPU *cpu) {
+  uint8_t op = cpu->mem[cpu->pc];
+  printf("0x%02X\t", cpu->pc);
+  switch (op) {
+    case OP_MOV: {
+      printf("MOV R%d, %d\n", cpu->mem[cpu->pc + 1], cpu->mem[cpu->pc + 2]);
+      break;
+    }
+    case OP_ADD: {
+      printf("ADD R%d, R%d\n", cpu->mem[cpu->pc + 1], cpu->mem[cpu->pc + 2]);
+      break;
+    }
+    case OP_SUB: {
+      printf("SUB R%d, R%d\n", cpu->mem[cpu->pc + 1], cpu->mem[cpu->pc + 2]);
+      break;
+    }
+    case OP_JMP: {
+      printf("JMP 0x%02X\n", cpu->mem[cpu->pc + 1]);
+      break;
+    }
+    case OP_JZ: {
+      printf("JZ 0x%02X\n", cpu->mem[cpu->pc + 1]);
+      break;
+    }
+    case OP_JNZ: {
+      printf("JNZ 0x%02X\n", cpu->mem[cpu->pc + 1]);
+      break;
+    }
+    case OP_AND: {
+      printf("AND R%d, R%d\n", cpu->mem[cpu->pc + 1], cpu->mem[cpu->pc + 2]);
+      break;
+    }
+    case OP_OR: {
+      printf("OR R%d, R%d\n", cpu->mem[cpu->pc + 1], cpu->mem[cpu->pc + 2]);
+      break;
+    }
+    case OP_XOR: {
+      printf("XOR R%d, R%d\n", cpu->mem[cpu->pc + 1], cpu->mem[cpu->pc + 2]);
+      break;
+    }
+    case OP_NOT: {
+      printf("NOT R%d\n", cpu->mem[cpu->pc + 1]);
+      break;
+    }
+    case OP_HLT: {
+      printf("HLT\n");
+      break;
+    }
+    default: {
+      printf("??? (0x%02X)\n", op);
+      return;
+    }
+  }
+}
+
 void cpu_dump(const CPU *cpu) {
   printf("PC=0x%02X  CARRY=%d  ZERO=%d\n", cpu->pc, cpu->flag_carry, cpu->flag_zero);
 
@@ -21,17 +76,13 @@ void cpu_reset(CPU *cpu) {
 void cpu_step(CPU *cpu) {
   uint8_t op = cpu->mem[cpu->pc++];
   switch (op) {
-    case 0xFF: {
-      cpu->halted = true;
-      break;
-    }
-    case 0x01: {
+    case OP_MOV: {
       uint8_t rd = cpu->mem[cpu->pc++];
       uint8_t imm = cpu->mem[cpu->pc++];
       cpu->reg[rd] = imm;
       break;
     }
-    case 0x03: {
+    case OP_ADD: {
       uint8_t rd = cpu->mem[cpu->pc++];
       uint8_t rs = cpu->mem[cpu->pc++];
       uint16_t result = cpu->reg[rd] + cpu->reg[rs];
@@ -41,7 +92,7 @@ void cpu_step(CPU *cpu) {
       cpu->reg[rd] = result;
       break;
     }
-    case 0x05: {
+    case OP_SUB: {
       uint8_t rd = cpu->mem[cpu->pc++];
       uint8_t rs = cpu->mem[cpu->pc++];
       cpu->flag_carry = (cpu->reg[rd] < cpu->reg[rs]);
@@ -51,23 +102,58 @@ void cpu_step(CPU *cpu) {
       cpu->reg[rd] = result;
       break;
     }
-    case 0x07: {
+    case OP_JMP: {
       uint8_t addr = cpu->mem[cpu->pc++];
       cpu->pc = addr;
       break;
     }
-    case 0x09: {
+    case OP_JZ: {
       uint8_t addr = cpu->mem[cpu->pc++];
       if (cpu->flag_zero) {
         cpu->pc = addr;
       }
       break;
     }
-    case 0x0B: {
+    case OP_JNZ: {
       uint8_t addr = cpu->mem[cpu->pc++];
       if (!cpu->flag_zero) {
         cpu->pc = addr;
       }
+      break;
+    }
+    case OP_AND: {
+      uint8_t rd = cpu->mem[cpu->pc++];
+      uint8_t rs = cpu->mem[cpu->pc++];
+      uint8_t result = cpu->reg[rd] & cpu->reg[rs];
+      cpu->flag_zero = (result == 0);
+      cpu->reg[rd] = result;
+      break;
+    }
+    case OP_OR: {
+      uint8_t rd = cpu->mem[cpu->pc++];
+      uint8_t rs = cpu->mem[cpu->pc++];
+      uint8_t result = cpu->reg[rd] | cpu->reg[rs];
+      cpu->flag_zero = (result == 0);
+      cpu->reg[rd] = result;
+      break;
+    }
+    case OP_XOR: {
+      uint8_t rd = cpu->mem[cpu->pc++];
+      uint8_t rs = cpu->mem[cpu->pc++];
+      uint8_t result = cpu->reg[rd] ^ cpu->reg[rs];
+      cpu->flag_zero = (result == 0);
+      cpu->reg[rd] = result;
+      break;
+    }
+    case OP_NOT: {
+      uint8_t rd = cpu->mem[cpu->pc++];
+      uint8_t result = ~cpu->reg[rd];
+      cpu->flag_zero = (result == 0);
+      cpu->reg[rd] = result;
+      break;
+    }
+    case OP_HLT: {
+      cpu->halted = true;
       break;
     }
     default: {
