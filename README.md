@@ -23,7 +23,7 @@ MOV R0, 5
 MOV R1, 1
 loop:
   SUB R0, R1  ; R0 = R0 - R1
-  JNZ loop    ; Jump to loop if the SUB operation is NOT 0.
+  JNZ loop    ; Jump to loop if the result of SUB is NOT 0.
 HLT           ; Halt CPU.
 ```
 ### Output
@@ -63,6 +63,10 @@ R0=0x00  R1=0x01  R2=0x00  R3=0x00
   - [x] OR  (0x08)
   - [x] XOR (0x09)
   - [x] NOT (0x0A)
+  - [x] PUSH (0x0B)
+  - [x] POP (0x0C)
+  - [x] CALL (0x0D)
+  - [x] RET (0x0E)
   - [x] HLT (0xFF)
 - Flags
   - [x] CARRY
