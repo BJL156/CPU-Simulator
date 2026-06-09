@@ -7,12 +7,24 @@ Clone the repository and change into its directory:
 git clone https://github.com/BJL156/CPU-Simulator
 cd CPU-Simulator
 ```
-Then run the `makefile` which will generate an `app` executable:
+Then use CMake:
 ```
-make
+cmake -B build
+cmake --build build
 ```
+If you're on Linux, the executable was written to `build/cpu_sim`. While if you're on Windows check inside of the `build/Debug` directory.
 
-# Example Output
+# Example
+### Input (`test.asm`)
+```
+MOV R0, 5
+MOV R1, 1
+loop:
+  SUB R0, R1
+  JNZ loop
+HLT
+```
+### Output
 ```
 0x00    MOV R0, 5
 0x03    MOV R1, 1
@@ -32,6 +44,10 @@ R0=0x00  R1=0x01  R2=0x00  R3=0x00
 ```
 
 # Features
+- Assembler.
+  - [x] Reads `.asm` files.
+  - [x] Converts files into bytecode.
+  - [x] Ignores whitespace, tabs, carriage return, and comments.
 - 256 bytes of memory.
 - 4 registers (R0 - R3).
 - Small byte-code instruction set:
