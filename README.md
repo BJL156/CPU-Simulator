@@ -76,4 +76,5 @@ R0=0x00  R1=0x01  R2=0x00  R3=0x00
 | 0x0E | POP  | `POP RD`     | Pop stack into register. |
 | 0x0F | CALL | `CALL label` | Push return address and jump to label. |
 | 0x10 | RET  | `RET`        | Return from current subroutine. |
+| 0x11 | CMP  | `CMP RD, RS` | Executes RD - RS; however, doesn't save the result. Updates flags. |
 | 0xFF | HLT  | `HLT`        | Halt execution by terminating the CPU. |
