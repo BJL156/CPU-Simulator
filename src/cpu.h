@@ -22,6 +22,8 @@ typedef enum {
   OP_CALL = 0x0F,
   OP_RET  = 0x10,
   OP_CMP  = 0x11,
+  OP_LOAD = 0x12,
+  OP_STOR = 0x13,
   OP_HLT  = 0xFF
 } Opcode;
 

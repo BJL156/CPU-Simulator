@@ -75,6 +75,14 @@ void cpu_disasm(const CPU *cpu) {
       printf("CMP R%d, R%d\n", cpu->mem[cpu->pc + 1], cpu->mem[cpu->pc + 2]);
       break;
     }
+    case OP_LOAD: {
+      printf("LOAD R%d, 0x%02X\n", cpu->mem[cpu->pc + 1], cpu->mem[cpu->pc + 2]);
+      break;
+    }
+    case OP_STOR: {
+      printf("STOR 0x%02X, R%d\n", cpu->mem[cpu->pc + 1], cpu->mem[cpu->pc + 2]);
+      break;
+    }
     case OP_HLT: {
       printf("HLT\n");
       break;
@@ -221,6 +229,18 @@ void cpu_step(CPU *cpu) {
       cpu->flag_carry = (cpu->reg[rd] < cpu->reg[rs]);
       uint16_t result = cpu->reg[rd] - cpu->reg[rs];
       cpu->flag_zero = ((result & 0xFF) == 0);
+      break;
+    }
+    case OP_LOAD: {
+      uint8_t rd = cpu->mem[cpu->pc++];
+      uint8_t addr = cpu->mem[cpu->pc++];
+      cpu->reg[rd] = cpu->mem[addr];
+      break;
+    }
+    case OP_STOR: {
+      uint8_t addr = cpu->mem[cpu->pc++];
+      uint8_t rs = cpu->mem[cpu->pc++];
+      cpu->mem[addr] = cpu->reg[rs];
       break;
     }
     case OP_HLT: {
