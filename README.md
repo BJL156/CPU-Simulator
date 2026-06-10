@@ -84,4 +84,6 @@ R0=0x00  R1=0x01  R2=0x00  R3=0x00
 | 0x0F | CALL | `CALL label` | Push return address and jump to label. |
 | 0x10 | RET  | `RET`        | Return from current subroutine. |
 | 0x11 | CMP  | `CMP RD, RS` | Executes RD - RS; however, doesn't save the result. Updates flags. |
+| 0x12 | LOAD  | `LOAD RD, addr` | returns the contents of addr to RD. |
+| 0x13 | STOR  | `STOR addr, RS` | Saves the contents of RS to addr. |
 | 0xFF | HLT  | `HLT`        | Halt execution by terminating the CPU. |
