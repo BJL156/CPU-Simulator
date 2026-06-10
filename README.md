@@ -14,6 +14,13 @@ cmake --build build
 ```
 On Linux the executable gets written to `build/cpu_sim`. While if on Windows check inside of `build/Debug`.
 
+### Usage
+```
+./cpu_sim <file.asm> [--step]
+  <file.asm>  assembly file to run.
+  --step      step through instructions interactively.
+```
+
 ## Example
 ### Input (`test.asm`)
 ```
