@@ -28,8 +28,8 @@ HLT           ; Halt CPU.
 ```
 ### Output
 ```
-0x00  MOV R0, 5
-0x03  MOV R1, 1
+0x00  MOVI R0, 5
+0x03  MOVI R1, 1
 0x06  SUB R0, R1
 0x09  JNZ 0x06
 0x06  SUB R0, R1
