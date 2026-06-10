@@ -12,7 +12,7 @@ Then use CMake:
 cmake -B build
 cmake --build build
 ```
-On Linux the executable gets written to `build/cpu_sim`. While if Windows check inside of `build/Debug`.
+On Linux the executable gets written to `build/cpu_sim`. While if on Windows check inside of `build/Debug`.
 
 ## Example
 ### Input (`test.asm`)
