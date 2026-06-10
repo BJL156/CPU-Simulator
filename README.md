@@ -60,18 +60,20 @@ R0=0x00  R1=0x01  R2=0x00  R3=0x00
 # Instruction Set
 | Opcode | Mnemonic | Syntax       | Description |
 |:-------:|:--------:|:------------:|:------------|
-| 0x01 | MOV  | `MOV RD, imm` | Copy imm into RD. |
-| 0x02 | ADD  | `ADD RD, RS` | RD = RD + RS. Updates flags. |
-| 0x03 | SUB  | `SUB RD, RS` | RD = RD - RS. Updates flags. |
-| 0x04 | JMP  | `JMP label` | Jump to label. |
-| 0x05 | JZ   | `JZ label`  | Jump to label if zero flag is set. |
-| 0x06 | JNZ  | `JNZ label` | Jump to label if zero flag is clear. |
-| 0x07 | AND  | `AND RD, RS` | RD = RD & RS. Updates flags. |
-| 0x08 | OR   | `OR RD, RS`  | RD = RD \| RS. Updates flags. |
-| 0x09 | XOR  | `XOR RD, RS` | RD = RD ^ RS. Updates flags. |
-| 0x0A | NOT  | `NOT RD`     | RD = ~RD. Updates flags. |
-| 0x0B | PUSH | `PUSH RD`    | Push RD onto stack. |
-| 0x0C | POP  | `POP RD`     | Pop stack into register. |
-| 0x0D | CALL | `CALL label` | Push return address and jump to label. |
-| 0x0E | RET  | `RET`        | Return from current subroutine. |
+| 0x01 | MOV  | `MOV RD, RS` | Copy RS into RD. |
+| 0x02 | MOVI  | `MOV RD, imm` | Copy imm into RD. |
+| 0x03 | ADD  | `ADD RD, RS` | RD = RD + RS. Updates flags. |
+| 0x04 | ADDI  | `ADD RD, imm` | RD = RD + imm. Updates flags. |
+| 0x05 | SUB  | `SUB RD, RS` | RD = RD - RS. Updates flags. |
+| 0x06 | JMP  | `JMP label` | Jump to label. |
+| 0x07 | JZ   | `JZ label`  | Jump to label if zero flag is set. |
+| 0x08 | JNZ  | `JNZ label` | Jump to label if zero flag is clear. |
+| 0x09 | AND  | `AND RD, RS` | RD = RD & RS. Updates flags. |
+| 0x0A | OR   | `OR RD, RS`  | RD = RD \| RS. Updates flags. |
+| 0x0B | XOR  | `XOR RD, RS` | RD = RD ^ RS. Updates flags. |
+| 0x0C | NOT  | `NOT RD`     | RD = ~RD. Updates flags. |
+| 0x0D | PUSH | `PUSH RD`    | Push RD onto stack. |
+| 0x0E | POP  | `POP RD`     | Pop stack into register. |
+| 0x0F | CALL | `CALL label` | Push return address and jump to label. |
+| 0x10 | RET  | `RET`        | Return from current subroutine. |
 | 0xFF | HLT  | `HLT`        | Halt execution by terminating the CPU. |
