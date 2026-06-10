@@ -12,7 +12,7 @@ Then use CMake:
 cmake -B build
 cmake --build build
 ```
-If you're on Linux, the executable was written to `build/cpu_sim`. While if you're on Windows check inside of the `build/Debug` directory.
+On Linux the executable gets written to `build/cpu_sim`. While if Windows check inside of `build/Debug`.
 
 # Example
 ### Input (`test.asm`)
@@ -28,20 +28,20 @@ HLT           ; Halt CPU.
 ```
 ### Output
 ```
-0x00    MOV R0, 5
-0x03    MOV R1, 1
-0x06    SUB R0, R1
-0x09    JNZ 0x06
-0x06    SUB R0, R1
-0x09    JNZ 0x06
-0x06    SUB R0, R1
-0x09    JNZ 0x06
-0x06    SUB R0, R1
-0x09    JNZ 0x06
-0x06    SUB R0, R1
-0x09    JNZ 0x06
-0x0B    HLT
-PC=0x0C  CARRY=0  ZERO=1
+0x00  MOV R0, 5
+0x03  MOV R1, 1
+0x06  SUB R0, R1
+0x09  JNZ 0x06
+0x06  SUB R0, R1
+0x09  JNZ 0x06
+0x06  SUB R0, R1
+0x09  JNZ 0x06
+0x06  SUB R0, R1
+0x09  JNZ 0x06
+0x06  SUB R0, R1
+0x09  JNZ 0x06
+0x0B  HLT
+PC=0x0C  SP=0xFF  CARRY=0  ZERO=1
 R0=0x00  R1=0x01  R2=0x00  R3=0x00
 ```
 
