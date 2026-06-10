@@ -1,4 +1,4 @@
-# CPU-Simulator
+# CPU Simulator
 A small CPU Simulator that emulates a 256 byte processer using a fetch-decode-execute cycle.
 
 # Build
