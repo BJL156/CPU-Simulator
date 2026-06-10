@@ -1,5 +1,5 @@
 # CPU Simulator
-A custom CPU architecture, assembler, and bytecode interpreter written in C. Supports registers, flags, branching, subroutines, and stack operations.
+A custom CPU architecture, assembler, and bytecode interpreter written in C. Supports registers, flags, branching, subroutines, stack and memory operations.
 
 ## Build
 Clone the repository and change into its directory:
