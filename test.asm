@@ -1,18 +1,14 @@
 JMP main
 
-test:
-  MOVI R2, 4
-  MOVI R3, 5
-  ADD R2, R3
+test_func:
+  loop:
+    ADDI R0, 1
+    CMP R0, R1
+    JNZ loop
   RET
 main:
-  MOVI R0, 3
-  MOVI R1, 1
-  ADD R0, R1
-
-  CALL test
-
-  MOV R0, R3
-  ADDI R0, 3
+  MOVI R0, 0
+  MOVI R1, 7
+  CALL test_func
 
   HLT

@@ -89,6 +89,7 @@ int assemble(const char *filename, uint8_t *out, int *out_len) {
     else if (!strcmp(mnem, "POP"))   current_byte += 2;
     else if (!strcmp(mnem, "CALL"))  current_byte += 2;
     else if (!strcmp(mnem, "RET"))   current_byte += 1;
+    else if (!strcmp(mnem, "CMP"))   current_byte += 3;
     else if (!strcmp(mnem, "HLT"))   current_byte += 1;
   }
 
@@ -159,6 +160,10 @@ int assemble(const char *filename, uint8_t *out, int *out_len) {
       out[(*out_len)++] = get_label_address(op1);
     } else if (!strcmp(mnem, "RET")) {
       out[(*out_len)++] = OP_RET;
+    } else if (!strcmp(mnem, "CMP")) {
+      out[(*out_len)++] = OP_CMP;
+      out[(*out_len)++] = op1[1] - '0';
+      out[(*out_len)++] = op2[1] - '0';
     } else if (!strcmp(mnem, "HLT")) {
       out[(*out_len)++] = OP_HLT;
     }

@@ -71,6 +71,10 @@ void cpu_disasm(const CPU *cpu) {
       printf("RET\n");
       break;
     }
+    case OP_CMP: {
+      printf("CMP R%d, R%d\n", cpu->mem[cpu->pc + 1], cpu->mem[cpu->pc + 2]);
+      break;
+    }
     case OP_HLT: {
       printf("HLT\n");
       break;
@@ -209,6 +213,14 @@ void cpu_step(CPU *cpu) {
     case OP_RET: {
       uint8_t return_addr = cpu->mem[cpu->sp++];
       cpu->pc = return_addr;
+      break;
+    }
+    case OP_CMP: {
+      uint8_t rd = cpu->mem[cpu->pc++];
+      uint8_t rs = cpu->mem[cpu->pc++];
+      cpu->flag_carry = (cpu->reg[rd] < cpu->reg[rs]);
+      uint16_t result = cpu->reg[rd] - cpu->reg[rs];
+      cpu->flag_zero = ((result & 0xFF) == 0);
       break;
     }
     case OP_HLT: {
