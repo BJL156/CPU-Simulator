@@ -74,7 +74,9 @@ int assemble(const char *filename, uint8_t *out, int *out_len) {
 
     char *mnem = strtok(buffer, " ,\t");
     if (!strcmp(mnem, "MOV"))        current_byte += 3;
+    else if (!strcmp(mnem, "MOVI"))  current_byte += 3;
     else if (!strcmp(mnem, "ADD"))   current_byte += 3;
+    else if (!strcmp(mnem, "ADDI"))  current_byte += 3;
     else if (!strcmp(mnem, "SUB"))   current_byte += 3;
     else if (!strcmp(mnem, "JMP"))   current_byte += 2;
     else if (!strcmp(mnem, "JZ"))    current_byte += 2;
@@ -105,11 +107,19 @@ int assemble(const char *filename, uint8_t *out, int *out_len) {
     if (!strcmp(mnem, "MOV")) {
       out[(*out_len)++] = OP_MOV;
       out[(*out_len)++] = op1[1] - '0';
+      out[(*out_len)++] = op2[1] - '0';
+    } else if (!strcmp(mnem, "MOVI")) {
+      out[(*out_len)++] = OP_MOVI;
+      out[(*out_len)++] = op1[1] - '0';
       out[(*out_len)++] = atoi(op2);
     } else if (!strcmp(mnem, "ADD")) {
       out[(*out_len)++] = OP_ADD;
       out[(*out_len)++] = op1[1] - '0';
       out[(*out_len)++] = op2[1] - '0';
+    } else if (!strcmp(mnem, "ADDI")) {
+      out[(*out_len)++] = OP_ADDI;
+      out[(*out_len)++] = op1[1] - '0';
+      out[(*out_len)++] = atoi(op2);
     } else if (!strcmp(mnem, "SUB")) {
       out[(*out_len)++] = OP_SUB;
       out[(*out_len)++] = op1[1] - '0';

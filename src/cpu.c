@@ -5,14 +5,22 @@
 
 void cpu_disasm(const CPU *cpu) {
   uint8_t op = cpu->mem[cpu->pc];
-  printf("0x%02X\t", cpu->pc);
+  printf("0x%02X  ", cpu->pc);
   switch (op) {
     case OP_MOV: {
-      printf("MOV R%d, %d\n", cpu->mem[cpu->pc + 1], cpu->mem[cpu->pc + 2]);
+      printf("MOV R%d, R%d\n", cpu->mem[cpu->pc + 1], cpu->mem[cpu->pc + 2]);
+      break;
+    }
+    case OP_MOVI: {
+      printf("MOVI R%d, %d\n", cpu->mem[cpu->pc + 1], cpu->mem[cpu->pc + 2]);
       break;
     }
     case OP_ADD: {
       printf("ADD R%d, R%d\n", cpu->mem[cpu->pc + 1], cpu->mem[cpu->pc + 2]);
+      break;
+    }
+    case OP_ADDI: {
+      printf("ADDI R%d, %d\n", cpu->mem[cpu->pc + 1], cpu->mem[cpu->pc + 2]);
       break;
     }
     case OP_SUB: {
@@ -95,6 +103,12 @@ void cpu_step(CPU *cpu) {
   switch (op) {
     case OP_MOV: {
       uint8_t rd = cpu->mem[cpu->pc++];
+      uint8_t rs = cpu->mem[cpu->pc++];
+      cpu->reg[rd] = cpu->reg[rs];
+      break;
+    }
+    case OP_MOVI: {
+      uint8_t rd = cpu->mem[cpu->pc++];
       uint8_t imm = cpu->mem[cpu->pc++];
       cpu->reg[rd] = imm;
       break;
@@ -103,6 +117,15 @@ void cpu_step(CPU *cpu) {
       uint8_t rd = cpu->mem[cpu->pc++];
       uint8_t rs = cpu->mem[cpu->pc++];
       uint16_t result = cpu->reg[rd] + cpu->reg[rs];
+      cpu->flag_carry = (result > 0xFF);
+      cpu->flag_zero = ((result & 0xFF) == 0);
+      cpu->reg[rd] = result;
+      break;
+    }
+    case OP_ADDI: {
+      uint8_t rd = cpu->mem[cpu->pc++];
+      uint8_t imm = cpu->mem[cpu->pc++];
+      uint16_t result = cpu->reg[rd] + imm;
       cpu->flag_carry = (result > 0xFF);
       cpu->flag_zero = ((result & 0xFF) == 0);
       cpu->reg[rd] = result;
