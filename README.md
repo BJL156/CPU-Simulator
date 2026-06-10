@@ -1,7 +1,7 @@
 # CPU Simulator
-A small CPU Simulator that emulates a 256 byte processer using a fetch-decode-execute cycle. It runs on its own simple assembly language.
+A custom CPU architecture, assembler, and bytecode interpreter written in C. Supports registers, flags, branching, subroutines, and stack operations.
 
-# Build
+## Build
 Clone the repository and change into its directory:
 ```
 git clone https://github.com/BJL156/CPU-Simulator
@@ -14,7 +14,7 @@ cmake --build build
 ```
 On Linux the executable gets written to `build/cpu_sim`. While if Windows check inside of `build/Debug`.
 
-# Example
+## Example
 ### Input (`test.asm`)
 ```
 ; Loop test
@@ -45,7 +45,7 @@ PC=0x0C  SP=0xFF  CARRY=0  ZERO=1
 R0=0x00  R1=0x01  R2=0x00  R3=0x00
 ```
 
-# Features
+## Features
 - Assembler.
   - [x] Reads `.asm` files.
   - [x] Converts files into bytecode.
@@ -57,13 +57,13 @@ R0=0x00  R1=0x01  R2=0x00  R3=0x00
   - [x] CARRY
   - [x] ZERO
  
-# Instruction Set
+## Instruction Set
 | Opcode | Mnemonic | Syntax       | Description |
 |:-------:|:--------:|:------------:|:------------|
 | 0x01 | MOV  | `MOV RD, RS` | Copy RS into RD. |
-| 0x02 | MOVI  | `MOV RD, imm` | Copy imm into RD. |
+| 0x02 | MOVI  | `MOVI RD, imm` | Copy imm into RD. |
 | 0x03 | ADD  | `ADD RD, RS` | RD = RD + RS. Updates flags. |
-| 0x04 | ADDI  | `ADD RD, imm` | RD = RD + imm. Updates flags. |
+| 0x04 | ADDI  | `ADDI RD, imm` | RD = RD + imm. Updates flags. |
 | 0x05 | SUB  | `SUB RD, RS` | RD = RD - RS. Updates flags. |
 | 0x06 | JMP  | `JMP label` | Jump to label. |
 | 0x07 | JZ   | `JZ label`  | Jump to label if zero flag is set. |
