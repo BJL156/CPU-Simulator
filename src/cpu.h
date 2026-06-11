@@ -4,6 +4,9 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#define MAX_REG 4
+#define MAX_MEM 256
+
 typedef enum {
   OP_MOV  = 0x01,
   OP_MOVI = 0x02,
@@ -28,9 +31,9 @@ typedef enum {
 } Opcode;
 
 typedef struct {
-  uint8_t reg[4];
+  uint8_t reg[MAX_REG];
   uint8_t pc;
-  uint8_t mem[256];
+  uint8_t mem[MAX_MEM];
   uint8_t sp;
   bool flag_carry;
   bool flag_zero;

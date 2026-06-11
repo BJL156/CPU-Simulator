@@ -50,7 +50,11 @@ int main(int argc, char *argv[]) {
   uint8_t program[256];
   memset(program, 0, sizeof(program));
   int program_len = 0;
-  assemble(arguments.filename, program, &program_len);
+  int result = assemble(arguments.filename, program, &program_len);
+  if (result) {
+    printf("Failed to assemble \"%s\".\n", arguments.filename);
+    return 1;
+  }
 
   CPU cpu;
   cpu_reset(&cpu);
