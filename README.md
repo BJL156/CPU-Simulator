@@ -79,7 +79,7 @@ R0=0x00  R1=0x01  R2=0x00  R3=0x00
 | 0x0A | OR   | `OR RD, RS`  | RD = RD \| RS. Updates flags. |
 | 0x0B | XOR  | `XOR RD, RS` | RD = RD ^ RS. Updates flags. |
 | 0x0C | NOT  | `NOT RD`     | RD = ~RD. Updates flags. |
-| 0x0D | PUSH | `PUSH RD`    | Push RD onto stack. |
+| 0x0D | PUSH | `PUSH RS`    | Push RS onto stack. |
 | 0x0E | POP  | `POP RD`     | Pop stack into register. |
 | 0x0F | CALL | `CALL label` | Push return address and jump to label. |
 | 0x10 | RET  | `RET`        | Return from current subroutine. |
