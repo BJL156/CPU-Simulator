@@ -89,4 +89,4 @@ R0=0x00  R1=0x01  R2=0x00  R3=0x00
 | 0x13 | LOAD  | `LOADR RD, RS` | returns the contents of RS to RD. |
 | 0x14 | STOR  | `STOR addr, RS` | Saves the contents of RS to addr. |
 | 0x15 | STORR  | `STORR RD, RS` | Saves the contents of RS to RD. |
-| 0xFF | HLT  | `HLT`        | Halt execution by terminating the CPU. |
+| 0xFF | HLT  | `HLT`        | Halt execution by terminating the CPU. Programs MUST use this to terminate. |
