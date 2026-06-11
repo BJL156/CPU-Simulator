@@ -1,5 +1,5 @@
 # CPU Simulator
-A custom CPU architecture, assembler, and bytecode interpreter written in C. Supports registers, flags, branching, subroutines, and stack operations.
+A custom CPU architecture, assembler, and bytecode interpreter written in C. Supports registers, flags, branching, subroutines, stack and memory operations.
 
 ## Build
 Clone the repository and change into its directory:
@@ -26,8 +26,8 @@ On Linux the executable gets written to `build/cpu_sim`. While if on Windows che
 ```
 ; Loop test
 
-MOVI R0, 5
-MOVI R1, 1
+MOVI R0, 5    ; R0 = 5
+MOVI R1, 1    ; R1 = 1
 loop:
   SUB R0, R1  ; R0 = R0 - R1
   JNZ loop    ; Jump to loop if the result of SUB is NOT 0.
@@ -79,9 +79,11 @@ R0=0x00  R1=0x01  R2=0x00  R3=0x00
 | 0x0A | OR   | `OR RD, RS`  | RD = RD \| RS. Updates flags. |
 | 0x0B | XOR  | `XOR RD, RS` | RD = RD ^ RS. Updates flags. |
 | 0x0C | NOT  | `NOT RD`     | RD = ~RD. Updates flags. |
-| 0x0D | PUSH | `PUSH RD`    | Push RD onto stack. |
+| 0x0D | PUSH | `PUSH RS`    | Push RS onto stack. |
 | 0x0E | POP  | `POP RD`     | Pop stack into register. |
 | 0x0F | CALL | `CALL label` | Push return address and jump to label. |
 | 0x10 | RET  | `RET`        | Return from current subroutine. |
 | 0x11 | CMP  | `CMP RD, RS` | Executes RD - RS; however, doesn't save the result. Updates flags. |
+| 0x12 | LOAD  | `LOAD RD, addr` | returns the contents of addr to RD. |
+| 0x13 | STOR  | `STOR addr, RS` | Saves the contents of RS to addr. |
 | 0xFF | HLT  | `HLT`        | Halt execution by terminating the CPU. |
