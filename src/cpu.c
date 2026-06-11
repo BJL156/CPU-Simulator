@@ -91,6 +91,14 @@ void cpu_disasm(const CPU *cpu) {
       printf("STORR R%d, R%d\n", cpu->mem[cpu->pc + 1], cpu->mem[cpu->pc + 2]);
       break;
     }
+    case OP_SHL: {
+      printf("SHL R%d\n", cpu->mem[cpu->pc + 1]);
+      break;
+    }
+    case OP_SHR: {
+      printf("SHR R%d\n", cpu->mem[cpu->pc + 1]);
+      break;
+    }
     case OP_HLT: {
       printf("HLT\n");
       break;
@@ -261,6 +269,22 @@ void cpu_step(CPU *cpu) {
       uint8_t rd = cpu->mem[cpu->pc++];
       uint8_t rs = cpu->mem[cpu->pc++];
       cpu->mem[cpu->reg[rd]] = cpu->reg[rs];
+      break;
+    }
+    case OP_SHL: {
+      uint8_t rd = cpu->mem[cpu->pc++];
+      uint16_t result = cpu->reg[rd] << 1;
+      cpu->flag_carry = (result > 0xFF);
+      cpu->flag_zero = ((result & 0xFF) == 0);
+      cpu->reg[rd] = (uint8_t)result;
+      break;
+    }
+    case OP_SHR: {
+      uint8_t rd = cpu->mem[cpu->pc++];
+      uint8_t result = cpu->reg[rd] >> 1;
+      cpu->flag_carry = (cpu->reg[rd] & 0x01);
+      cpu->flag_zero = (result == 0);
+      cpu->reg[rd] = result;
       break;
     }
     case OP_HLT: {

@@ -29,6 +29,8 @@ typedef enum {
   OP_LOADR = 0x13,
   OP_STOR  = 0x14,
   OP_STORR = 0x15,
+  OP_SHL   = 0x16,
+  OP_SHR   = 0x17,
   OP_HLT   = 0xFF
 } Opcode;
 
