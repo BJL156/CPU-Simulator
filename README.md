@@ -57,6 +57,7 @@ R0=0x00  R1=0x01  R2=0x00  R3=0x00
   - [x] Reads `.asm` files.
   - [x] Converts files into bytecode.
   - [x] Ignores whitespace, tabs, carriage return, and comments.
+  - [x] Error handling.
 - 256 bytes of memory.
 - 4 registers (R0 - R3).
 - Small byte-code instruction set. See [Instruction Set](#instruction-set).
