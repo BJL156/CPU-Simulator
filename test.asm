@@ -1,10 +1,12 @@
 JMP main
 
 test_func:
+  MOVI R3, 0x40
+
   MOVI R0, 67
-  STOR 0x50, R0
+  STORR R3, R0
   MOVI R0, 41
-  LOAD R0, 0x50
+  LOADR R0, R3
 
   RET
 

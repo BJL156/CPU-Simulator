@@ -125,7 +125,9 @@ int assemble(const char *filename, uint8_t *out, int *out_len) {
     else if (!strcmp(mnem, "RET"))   current_byte += 1;
     else if (!strcmp(mnem, "CMP"))   current_byte += 3;
     else if (!strcmp(mnem, "LOAD"))  current_byte += 3;
+    else if (!strcmp(mnem, "LOADR")) current_byte += 3;
     else if (!strcmp(mnem, "STOR"))  current_byte += 3;
+    else if (!strcmp(mnem, "STORR")) current_byte += 3;
     else if (!strcmp(mnem, "HLT"))   current_byte += 1;
     else {
       printf("Error on line %d: unknown mnemomic \"%s\".\n", current_line, mnem);
@@ -326,6 +328,17 @@ int assemble(const char *filename, uint8_t *out, int *out_len) {
       out[(*out_len)++] = OP_LOAD;
       out[(*out_len)++] = rd;
       out[(*out_len)++] = (uint8_t)strtol(op2, NULL, 0);
+    } else if (!strcmp(mnem, "LOADR")) {
+      int rd = parse_register(op1, current_line);
+      int rs = parse_register(op2, current_line);
+      if (rd == -1 || rs == -1) {
+        fclose(file);
+        return 1;
+      }
+
+      out[(*out_len)++] = OP_LOADR;
+      out[(*out_len)++] = rd;
+      out[(*out_len)++] = rs;
     } else if (!strcmp(mnem, "STOR")) {
       int rs = parse_register(op2, current_line);
       if (rs == -1) {
@@ -335,6 +348,17 @@ int assemble(const char *filename, uint8_t *out, int *out_len) {
 
       out[(*out_len)++] = OP_STOR;
       out[(*out_len)++] = (uint8_t)strtol(op1, NULL, 0);
+      out[(*out_len)++] = rs;
+    } else if (!strcmp(mnem, "STORR")) {
+      int rd = parse_register(op1, current_line);
+      int rs = parse_register(op2, current_line);
+      if (rd == -1 || rs == -1) {
+        fclose(file);
+        return 1;
+      }
+
+      out[(*out_len)++] = OP_STORR;
+      out[(*out_len)++] = rd;
       out[(*out_len)++] = rs;
     } else if (!strcmp(mnem, "HLT")) {
       out[(*out_len)++] = OP_HLT;
