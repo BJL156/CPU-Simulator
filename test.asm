@@ -7,6 +7,7 @@ test_func:
   LOAD R0, 0x50
 
   RET
+
 main:
   CALL test_func
 

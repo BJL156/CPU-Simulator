@@ -63,6 +63,16 @@ int parse_register(const char *op, int current_line) {
   return index;
 }
 
+int parse_immediate(const char *op, int current_line) {
+  int imm = (int)strtol(op, NULL, 0);
+  if (imm < 0 || imm > 255) {
+    printf("Error on line %d: invalid immediate range \"%d\".\n", current_line, imm);
+    return -1;
+  }
+
+  return imm;
+}
+
 int assemble(const char *filename, uint8_t *out, int *out_len) {
   FILE *file = fopen(filename, "r");
   if (file == NULL) {
@@ -83,6 +93,13 @@ int assemble(const char *filename, uint8_t *out, int *out_len) {
     char *colon = strchr(buffer, ':');
     if (colon != NULL) {
       *colon = '\0';
+
+      if (get_label_address(buffer) != -1) {
+        printf("Error on line %d: duplicate label \"%s\".\n", current_line, buffer);
+        fclose(file);
+        return 1;
+      }
+
       strcpy(labels[label_count].name, buffer);
       labels[label_count].address = current_byte;
       label_count++;
@@ -144,14 +161,15 @@ int assemble(const char *filename, uint8_t *out, int *out_len) {
       out[(*out_len)++] = rs;
     } else if (!strcmp(mnem, "MOVI")) {
       int rd = parse_register(op1, current_line);
-      if (rd == -1) {
+      int imm = parse_immediate(op2, current_line);
+      if (rd == -1 || imm == -1) {
         fclose(file);
         return 1;
       }
 
       out[(*out_len)++] = OP_MOVI;
       out[(*out_len)++] = rd;
-      out[(*out_len)++] = atoi(op2);
+      out[(*out_len)++] = imm;
     } else if (!strcmp(mnem, "ADD")) {
       int rd = parse_register(op1, current_line);
       int rs = parse_register(op2, current_line);
@@ -165,7 +183,8 @@ int assemble(const char *filename, uint8_t *out, int *out_len) {
       out[(*out_len)++] = rs;
     } else if (!strcmp(mnem, "ADDI")) {
       int rd = parse_register(op1, current_line); 
-      if (rd == -1) {
+      int imm = parse_immediate(op2, current_line);
+      if (rd == -1 || imm == -1) {
         fclose(file);
         return 1;
       }
