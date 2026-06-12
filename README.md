@@ -1,5 +1,5 @@
 # CPU Simulator
-A custom CPU architecture, assembler, and bytecode interpreter written in C. Supports registers, flags, branching, subroutines, stack and memory operations.
+A custom CPU architecture along with the assembler and bytecode interpreter both written in C. Supports registers, flags, branching, subroutines, stack and memory operations.
 
 ## Build
 Clone the repository and change into its directory:
@@ -64,6 +64,11 @@ R0=0x00  R1=0x01  R2=0x00  R3=0x00
 - Flags.
   - [x] CARRY (`flag_carry`).
   - [x] ZERO (`flag_zero`).
+- Execution Trace via `--step`.
+  - [x] Supports commands.
+    - [x] No input (pressing enter without typing anything) - continue trace.
+    - [x] `m 0x01` - shows hex dump at specified location.
+    - [x] `q` - quit execution and trace.
  
 ## Instruction Set
 | Opcode | Mnemonic | Syntax       | Description |
