@@ -69,7 +69,7 @@ R0=0x00  R1=0x01  R2=0x00  R3=0x00
   - [x] Supports commands.
     - [x] No input (pressing enter without typing anything) - continue trace.
     - [x] `m 0x01` - shows hex dump at specified location.
-    - [x] `q` - quit execution and trace.
+    - [x] `q` - quit both execution and trace.
  
 ## Instruction Set
 | Opcode | Mnemonic | Syntax       | Description |
@@ -92,7 +92,7 @@ R0=0x00  R1=0x01  R2=0x00  R3=0x00
 | 0x10 | RET  | `RET`        | Return from current subroutine. |
 | 0x11 | CMP  | `CMP RD, RS` | Executes RD - RS; however, doesn't save the result. Updates flags. |
 | 0x12 | LOAD  | `LOAD RD, addr` | returns the contents of addr to RD. |
-| 0x13 | LOAD  | `LOADR RD, RS` | returns the contents of RS to RD. |
+| 0x13 | LOADR  | `LOADR RD, RS` | returns the contents of RS to RD. |
 | 0x14 | STOR  | `STOR addr, RS` | Saves the contents of RS to addr. |
 | 0x15 | STORR  | `STORR RD, RS` | Saves the contents of RS to RD. |
 | 0x16 | SHL  | `SHL RD` | Shifts bits in RD to the left by 1. |
