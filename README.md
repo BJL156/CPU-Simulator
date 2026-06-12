@@ -22,7 +22,7 @@ On Linux the executable gets written to `build/cpu_sim`. While if on Windows che
 ```
 
 ## Example
-### Input (`test.asm`)
+### Input (`asm/loop.asm`)
 ```
 ; Loop test
 
