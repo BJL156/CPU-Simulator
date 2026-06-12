@@ -7,6 +7,7 @@
 
 Label labels[64];
 int label_count = 0;
+char current_scope[64] = "";
 
 void trim(char *line) {
   char *carriage_return = strchr(line, '\r');
@@ -73,6 +74,14 @@ int parse_immediate(const char *op, int current_line) {
   return imm;
 }
 
+void make_scoped_label(char *out, const char *name) {
+  if (name[0] == '.') {
+    sprintf(out, "%s%s", current_scope, name);
+  } else {
+    strcpy(out, name);
+  }
+}
+
 int assemble(const char *filename, uint8_t *out, int *out_len) {
   FILE *file = fopen(filename, "r");
   if (file == NULL) {
@@ -100,7 +109,15 @@ int assemble(const char *filename, uint8_t *out, int *out_len) {
         return 1;
       }
 
-      strcpy(labels[label_count].name, buffer);
+      char full_name[128];
+      if (buffer[0] == '.') {
+        make_scoped_label(full_name, buffer);
+      } else {
+        strcpy(current_scope, buffer);
+        strcpy(full_name, buffer);
+      }
+
+      strcpy(labels[label_count].name, full_name);
       labels[label_count].address = current_byte;
       label_count++;
       continue;
@@ -138,13 +155,26 @@ int assemble(const char *filename, uint8_t *out, int *out_len) {
     }
   }
 
+  current_scope[0] = '\0';
+
   rewind(file);
 
   current_line = 0;
   while (fgets(buffer, 256, file)) {
     current_line++;
     trim(buffer);
-    if (buffer[0] == '\0' || strchr(buffer, ':')) {
+    if (buffer[0] == '\0') {
+      continue;
+    }
+
+    char *colon = strchr(buffer, ':');
+    if (colon != NULL) {
+      *colon = '\0';
+
+      if (buffer[0] != '.') {
+        strcpy(current_scope, buffer);
+      }
+
       continue;
     }
 
@@ -208,7 +238,9 @@ int assemble(const char *filename, uint8_t *out, int *out_len) {
       out[(*out_len)++] = rd;
       out[(*out_len)++] = rs;
     } else if (!strcmp(mnem, "JMP")) {
-      int addr = get_label_address(op1);
+      char lookup[128];
+      make_scoped_label(lookup, op1);
+      int addr = get_label_address(lookup);
       if (addr == -1) {
         printf("Error on line %d: undefined label \"%s\".\n", current_line, op1);
         fclose(file);
@@ -218,7 +250,9 @@ int assemble(const char *filename, uint8_t *out, int *out_len) {
       out[(*out_len)++] = OP_JMP;
       out[(*out_len)++] = (uint8_t)addr;
     } else if (!strcmp(mnem, "JZ")) {
-      int addr = get_label_address(op1);
+      char lookup[128];
+      make_scoped_label(lookup, op1);
+      int addr = get_label_address(lookup);
       if (addr == -1) {
         printf("Error on line %d: undefined label \"%s\".\n", current_line, op1);
         fclose(file);
@@ -228,7 +262,9 @@ int assemble(const char *filename, uint8_t *out, int *out_len) {
       out[(*out_len)++] = OP_JZ;
       out[(*out_len)++] = (uint8_t)addr;
     } else if (!strcmp(mnem, "JNZ")) {
-      int addr = get_label_address(op1);
+      char lookup[128];
+      make_scoped_label(lookup, op1);
+      int addr = get_label_address(lookup);
       if (addr == -1) {
         printf("Error on line %d: undefined label \"%s\".\n", current_line, op1);
         fclose(file);
@@ -298,7 +334,9 @@ int assemble(const char *filename, uint8_t *out, int *out_len) {
       out[(*out_len)++] = OP_POP;
       out[(*out_len)++] = rd;
     } else if (!strcmp(mnem, "CALL")) {
-      int addr = get_label_address(op1);
+      char lookup[128];
+      make_scoped_label(lookup, op1);
+      int addr = get_label_address(lookup);
       if (addr == -1) {
         printf("Error on line %d: undefined label \"%s\".\n", current_line, op1);
         fclose(file);
