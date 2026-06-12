@@ -58,6 +58,7 @@ R0=0x00  R1=0x01  R2=0x00  R3=0x00
   - [x] Converts files into bytecode.
   - [x] Ignores whitespace, tabs, carriage return, and comments.
   - [x] Error handling.
+  - [x] Handles scope and unscoped labels.
 - 256 bytes of memory by default.
 - 4 registers by default. (`R0` - `R3`).
 - Small byte-code instruction set. See [Instruction Set](#instruction-set).
