@@ -63,9 +63,19 @@ int main(int argc, char *argv[]) {
   while (!cpu.halted) {
     if (arguments.step) {
       cpu_disasm(&cpu);
-      cpu_step(&cpu);
-      cpu_dump(&cpu);
-      getchar();
+
+      char input[32];
+      fgets(input, sizeof(input), stdin);
+      if (input[0] == 'm') {
+        unsigned int addr;
+        sscanf(input + 1, "%x", &addr);
+        cpu_dump_mem(&cpu, addr);
+      } else if (input[0] == 'q') {
+        break;
+      } else {
+        cpu_step(&cpu);
+        cpu_dump(&cpu);
+      }
     } else {
       cpu_disasm(&cpu);
       cpu_step(&cpu);

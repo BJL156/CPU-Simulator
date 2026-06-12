@@ -121,6 +121,21 @@ void cpu_dump(const CPU *cpu) {
   putchar('\n');
 }
 
+void cpu_dump_mem(const CPU *cpu, uint8_t addr) {
+  printf("0x%02X:", addr);
+
+  uint16_t last_addr = addr + 16;
+  if (last_addr > 0xFF) {
+    last_addr = 0xFF;
+  }
+
+  for (int current_addr = addr; current_addr < last_addr; current_addr++) {
+    printf(" %02X", cpu->mem[current_addr]);
+  }
+
+  printf("\n");
+}
+
 void cpu_reset(CPU *cpu) {
   memset(cpu, 0, sizeof(CPU));
   cpu->sp = 0xFF;

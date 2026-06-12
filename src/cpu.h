@@ -46,6 +46,7 @@ typedef struct {
 
 void cpu_disasm(const CPU *cpu);
 void cpu_dump(const CPU *cpu);
+void cpu_dump_mem(const CPU *cpu, uint8_t addr);
 void cpu_reset(CPU *cpu);
 void cpu_step(CPU *cpu);
 
