@@ -129,6 +129,7 @@ int assemble(const char *filename, uint8_t *out, int *out_len) {
     else if (!strcmp(mnem, "ADD"))   current_byte += 3;
     else if (!strcmp(mnem, "ADDI"))  current_byte += 3;
     else if (!strcmp(mnem, "SUB"))   current_byte += 3;
+    else if (!strcmp(mnem, "SUBI"))  current_byte += 3;
     else if (!strcmp(mnem, "JMP"))   current_byte += 2;
     else if (!strcmp(mnem, "JZ"))    current_byte += 2;
     else if (!strcmp(mnem, "JNZ"))   current_byte += 2;
@@ -237,6 +238,17 @@ int assemble(const char *filename, uint8_t *out, int *out_len) {
       out[(*out_len)++] = OP_SUB;
       out[(*out_len)++] = rd;
       out[(*out_len)++] = rs;
+    } else if (!strcmp(mnem, "SUBI")) {
+      int rd = parse_register(op1, current_line); 
+      int imm = parse_immediate(op2, current_line);
+      if (rd == -1 || imm == -1) {
+        fclose(file);
+        return 1;
+      }
+
+      out[(*out_len)++] = OP_SUBI;
+      out[(*out_len)++] = rd;
+      out[(*out_len)++] = atoi(op2);
     } else if (!strcmp(mnem, "JMP")) {
       char lookup[128];
       make_scoped_label(lookup, op1);

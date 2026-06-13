@@ -27,6 +27,10 @@ void cpu_disasm(const CPU *cpu) {
       printf("SUB R%d, R%d\n", cpu->mem[cpu->pc + 1], cpu->mem[cpu->pc + 2]);
       break;
     }
+    case OP_SUBI: {
+      printf("SUBI R%d, %d\n", cpu->mem[cpu->pc + 1], cpu->mem[cpu->pc + 2]);
+      break;
+    }
     case OP_JMP: {
       printf("JMP 0x%02X\n", cpu->mem[cpu->pc + 1]);
       break;
@@ -179,6 +183,15 @@ void cpu_step(CPU *cpu) {
       uint8_t rs = cpu->mem[cpu->pc++];
       cpu->flag_carry = (cpu->reg[rd] < cpu->reg[rs]);
       uint16_t result = cpu->reg[rd] - cpu->reg[rs];
+      cpu->flag_zero = ((result & 0xFF) == 0);
+      cpu->reg[rd] = result;
+      break;
+    }
+    case OP_SUBI: {
+      uint8_t rd = cpu->mem[cpu->pc++];
+      uint8_t imm = cpu->mem[cpu->pc++];
+      cpu->flag_carry = (cpu->reg[rd] < imm);
+      uint16_t result = cpu->reg[rd] - imm;
       cpu->flag_zero = ((result & 0xFF) == 0);
       cpu->reg[rd] = result;
       break;
