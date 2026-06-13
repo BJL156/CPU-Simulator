@@ -79,22 +79,23 @@ R0=0x00  R1=0x01  R2=0x00  R3=0x00
 | 0x03 | ADD  | `ADD RD, RS` | RD = RD + RS. Updates flags. |
 | 0x04 | ADDI  | `ADDI RD, imm` | RD = RD + imm. Updates flags. |
 | 0x05 | SUB  | `SUB RD, RS` | RD = RD - RS. Updates flags. |
-| 0x06 | JMP  | `JMP label` | Jump to label. |
-| 0x07 | JZ   | `JZ label`  | Jump to label if zero flag is set. |
-| 0x08 | JNZ  | `JNZ label` | Jump to label if zero flag is clear. |
-| 0x09 | AND  | `AND RD, RS` | RD = RD & RS. Updates flags. |
-| 0x0A | OR   | `OR RD, RS`  | RD = RD \| RS. Updates flags. |
-| 0x0B | XOR  | `XOR RD, RS` | RD = RD ^ RS. Updates flags. |
-| 0x0C | NOT  | `NOT RD`     | RD = ~RD. Updates flags. |
-| 0x0D | PUSH | `PUSH RS`    | Push RS onto stack. |
-| 0x0E | POP  | `POP RD`     | Pop stack into register. |
-| 0x0F | CALL | `CALL label` | Push return address and jump to label. |
-| 0x10 | RET  | `RET`        | Return from current subroutine. |
-| 0x11 | CMP  | `CMP RD, RS` | Executes RD - RS; however, doesn't save the result. Updates flags. |
-| 0x12 | LOAD  | `LOAD RD, addr` | returns the contents of addr to RD. |
-| 0x13 | LOADR  | `LOADR RD, RS` | returns the contents of RS to RD. |
-| 0x14 | STOR  | `STOR addr, RS` | Saves the contents of RS to addr. |
-| 0x15 | STORR  | `STORR RD, RS` | Saves the contents of RS to RD. |
-| 0x16 | SHL  | `SHL RD` | Shifts bits in RD to the left by 1. |
-| 0x17 | SHR  | `SHR RD` | Shifts bits in RD to the right by 1. |
+| 0x06 | SUBI  | `SUBI RD, imm` | RD = RD - imm. Updates flags. |
+| 0x07 | JMP  | `JMP label` | Jump to label. |
+| 0x08 | JZ   | `JZ label`  | Jump to label if zero flag is set. |
+| 0x09 | JNZ  | `JNZ label` | Jump to label if zero flag is clear. |
+| 0x0A | AND  | `AND RD, RS` | RD = RD & RS. Updates flags. |
+| 0x0B | OR   | `OR RD, RS`  | RD = RD \| RS. Updates flags. |
+| 0x0C | XOR  | `XOR RD, RS` | RD = RD ^ RS. Updates flags. |
+| 0x0D | NOT  | `NOT RD`     | RD = ~RD. Updates flags. |
+| 0x0E | PUSH | `PUSH RS`    | Push RS onto stack. |
+| 0x0F | POP  | `POP RD`     | Pop stack into register. |
+| 0x10 | CALL | `CALL label` | Push return address and jump to label. |
+| 0x11 | RET  | `RET`        | Return from current subroutine. |
+| 0x12 | CMP  | `CMP RD, RS` | Executes RD - RS; however, doesn't save the result. Updates flags. |
+| 0x13 | LOAD  | `LOAD RD, addr` | returns the contents of addr to RD. |
+| 0x14 | LOADR  | `LOADR RD, RS` | returns the contents of RS to RD. |
+| 0x15 | STOR  | `STOR addr, RS` | Saves the contents of RS to addr. |
+| 0x16 | STORR  | `STORR RD, RS` | Saves the contents of RS to RD. |
+| 0x17 | SHL  | `SHL RD` | Shifts bits in RD to the left by 1. |
+| 0x18 | SHR  | `SHR RD` | Shifts bits in RD to the right by 1. |
 | 0xFF | HLT  | `HLT`        | Halt execution by terminating the CPU. Programs MUST use this to terminate. |
