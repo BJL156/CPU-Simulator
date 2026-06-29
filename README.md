@@ -1,24 +1,33 @@
 # CPU Simulator
+[![Language](https://img.shields.io/badge/language-C-blue.svg)](https://en.wikipedia.org/wiki/C_(programming_language))
+[![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Windows-lightgrey.svg)](https://www.linux.org/)
+[![Instructions](https://img.shields.io/badge/instructions-25-success.svg)](#instruction-set)
+
 A custom CPU architecture along with the assembler and bytecode interpreter both written in C. Supports registers, flags, branching, subroutines, stack and memory operations.
 
 ## Build
+
 Clone the repository and change into its directory:
-```
+
+```bash
 git clone https://github.com/BJL156/CPU-Simulator
 cd CPU-Simulator
 ```
+
 Then use CMake:
-```
+
+```bash
 cmake -B build
 cmake --build build
 ```
-On Linux the executable gets written to `build/cpu_sim`. While if on Windows check inside of `build/Debug`.
 
-### Usage
-```
-./cpu_sim <file.asm> [--step]
-  <file.asm>  assembly file to run.
-  --step      step through instructions interactively.
+The executable is written to `build/cpu_sim` on Linux, or `build\Debug\cpu_sim.exe` on Windows.
+
+## Usage
+```bash
+./cpu_sim  [--step]
+    Assembly file to run.
+  --step      Step through instructions interactively.
 ```
 
 ## Example
@@ -53,23 +62,19 @@ R0=0x00  R1=0x01  R2=0x00  R3=0x00
 ```
 
 ## Features
-- Assembler.
-  - [x] Reads `.asm` files.
-  - [x] Converts files into bytecode.
-  - [x] Ignores whitespace, tabs, carriage return, and comments.
+- Assembler
+  - [x] Reads `.asm` files and converts them into bytecode.
+  - [x] Ignores whitespace, tabs, carriage returns, and comments.
   - [x] Error handling.
-  - [x] Handles scope and unscoped labels.
-- 256 bytes of memory by default.
-- 4 registers by default. (`R0` - `R3`).
-- Small byte-code instruction set. See [Instruction Set](#instruction-set).
-- Flags.
-  - [x] CARRY (`flag_carry`).
-  - [x] ZERO (`flag_zero`).
-- Execution Trace via `--step`.
-  - [x] Supports commands.
-    - [x] No input (pressing enter without typing anything) - continue trace.
-    - [x] `m 0x01` - shows hex dump at specified location.
-    - [x] `q` - quit both execution and trace.
+  - [x] Handles scoped and unscoped labels.
+- Virtual Machine
+  - [x] 256 bytes of memory.
+  - [x] 4 general-purpose registers (`R0`–`R3`).
+  - [x] CARRY and ZERO flags.
+- Interactive step-through debugger (`--step`)
+  - [x] Press Enter - advance one instruction.
+  - [x] `m 0x01` - hex dump at a memory address.
+  - [x] `q` - quit.
  
 ## Instruction Set
 | Opcode | Mnemonic | Syntax       | Description |
