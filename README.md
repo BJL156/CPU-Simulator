@@ -5,7 +5,7 @@
 
 A custom CPU architecture along with the assembler and bytecode interpreter both written in C. Supports registers, flags, branching, subroutines, stack and memory operations.
 
-This project was a stepping stone toward writing for a real ISA. After designing my own instruction set here, I moved on to the [AArch64 Assembler](https://github.com/BJL156/ARM-Assembler).
+This is the second project towards writing an AArch64 toolchain from scratch in C. The next project is: [AArch64 Assembler](https://github.com/BJL156/ARM-Assembler).
 
 ## Build
 
