@@ -27,9 +27,9 @@ The executable is written to `build/cpu_sim` on Linux, or `build\Debug\cpu_sim.e
 
 ## Usage
 ```bash
-./cpu_sim  [--step]
-    Assembly file to run.
-  --step      Step through instructions interactively.
+./cpu_sim [file.asm] [--step]
+  file.asm    Assembly file to run.
+  --step      Step through instructions.
 ```
 
 ## Example
