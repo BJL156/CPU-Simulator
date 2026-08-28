@@ -33,7 +33,7 @@ The executable is written to `build/cpu_sim` on Linux, or `build\Debug\cpu_sim.e
 ```
 
 ## Example
-### Input (`asm/loop.asm`)
+### Input ([asm/loop.asm](https://github.com/BJL156/CPU-Simulator/blob/main/asm/loop.asm))
 ```
 ; Loop test
 
