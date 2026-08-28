@@ -28,8 +28,8 @@ The executable is written to `build/cpu_sim` on Linux, or `build\Debug\cpu_sim.e
 ## Usage
 ```bash
 ./cpu_sim [file.asm] [--step]
-  file.asm    Assembly file to run.
-  --step      Step through instructions.
+  file.asm  Assembly file to run.
+  --step    Step through instructions.
 ```
 
 ## Example
