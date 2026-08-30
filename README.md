@@ -13,7 +13,7 @@ Clone the repository and change into its directory:
 
 ```bash
 git clone https://github.com/BJL156/CPU-Simulator
-cd CPU-Simulator
+cd ./CPU-Simulator
 ```
 
 Then use CMake:
@@ -23,7 +23,7 @@ cmake -B build
 cmake --build build
 ```
 
-The executable is written to `build/cpu_sim` on Linux, or `build\Debug\cpu_sim.exe` on Windows.
+The executable is written to `./build/cpu_sim` on Linux, or `.\build\Debug\cpu_sim.exe` on Windows.
 
 ## Usage
 ```bash
@@ -33,7 +33,7 @@ The executable is written to `build/cpu_sim` on Linux, or `build\Debug\cpu_sim.e
 ```
 
 ## Example
-### Input ([asm/loop.asm](https://github.com/BJL156/CPU-Simulator/blob/main/asm/loop.asm))
+### Input ([./asm/loop.asm](https://github.com/BJL156/CPU-Simulator/blob/main/asm/loop.asm))
 ```
 ; Loop test
 
@@ -105,4 +105,4 @@ R0=0x00  R1=0x01  R2=0x00  R3=0x00
 | 0x16 | STORR | `STORR RD, RS` | Saves the contents of RS to RD. |
 | 0x17 | SHL | `SHL RD` | Shifts bits in RD to the left by 1. |
 | 0x18 | SHR | `SHR RD` | Shifts bits in RD to the right by 1. |
-| 0xFF | HLT | `HLT` | Halt execution by terminating the CPU. Programs MUST use this to terminate. |
+| 0xFF | HLT | `HLT` | Halt execution by terminating the CPU. Programs must use this to terminate. |
