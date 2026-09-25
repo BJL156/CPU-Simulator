@@ -3,7 +3,7 @@
 [![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Windows-lightgrey.svg)](https://www.linux.org/)
 [![Instructions](https://img.shields.io/badge/instructions-25-success.svg)](#instruction-set)
 
-A custom CPU architecture along with the assembler and bytecode interpreter both written in C. Supports registers, flags, branching, subroutines, stack and memory operations.
+A custom CPU architecture along with the assembler and bytecode interpreter both written in C. It takes in assembly while producing an execution trace along with a CPU dump. Supports registers, flags, branching, subroutines, stack and memory operations.
 
 This is the second project towards writing an AArch64 toolchain from scratch in C. The next project is: [AArch64 Assembler](https://github.com/BJL156/ARM-Assembler) which targets an pre-existing ISA.
 
